@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<!-- Working Hours: 9 PM IST - 6 AM IST (3:30 PM - 12:30 AM UTC) -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuldeep Mitra's Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #e2e8f0;
+            background-color: #0f172a;
+        }
+
+        .background-image {
+            background-image: url('bck.gif');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            position: relative;
+        }
+
+        .background-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            /* 80% black overlay */
+            backdrop-filter: blur(2px);
+        }
+
+        .hero-bg-animation {
+            animation: pulse-glow 5s infinite ease-in-out alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 15px rgba(0, 176, 107, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 30px rgba(0, 176, 107, 0.8);
+            }
+        }
+
+        .glass {
+            background-color: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-glass {
+            position: relative;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            z-index: 1;
+        }
+
+        .section-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1.5rem;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, #22c55e, #16a34a, #0d9488) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .section-glass:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-glass:hover::before {
+            opacity: 1;
+        }
+
+        /* Skills section styling */
+        .skills-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .skill-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .skill-group-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 50px;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .skill-item-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 150px;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 10;
+        }
+
+        .skill-item-wrapper.expanded-wrapper {
+            width: 280px;
+        }
+
+        .skill-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background-color: rgba(30, 41, 59, 0.7);
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .skill-item-wrapper:hover .skill-item {
+            animation: pulse-glow 2s infinite ease-in-out alternate;
+        }
+
+        .skill-item.expanded {
+            width: 280px;
+            height: 100px;
+            border-radius: 1.5rem;
+            background-color: rgba(30, 41, 59, 0.9);
+            animation: none;
+            z-index: 50;
+            transform: scale(1.1);
+        }
+
+        .skill-item-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backface-visibility: hidden;
+            transition: opacity 0.3s;
+        }
+
+        .skill-item.expanded .skill-item-content {
+            opacity: 0;
+            transition-delay: 0s;
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+        }
+
+        .skill-description {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            font-size: 0.875rem;
+            text-align: center;
+            color: white;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            border-radius: 1.5rem;
+            backface-visibility: hidden;
+        }
+
+        .skill-item.expanded .skill-description {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0.3s;
+        }
+
+        .skill-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            text-align: center;
+            white-space: nowrap;
+            transition: opacity 0.3s;
+        }
+
+        .skill-item.expanded+.skill-name {
+            opacity: 0;
+        }
+
+        /* Testimonials Styles */
+        .testimonial-card {
+            background-color: rgba(30, 41, 59, 0.7);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Project Gallery Modal */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            max-width: 90%;
+            max-height: 90%;
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .lightbox-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #e2e8f0;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .lightbox-close:hover,
+        .lightbox-close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Work Experience Styles */
+        .work-exp-item-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .work-exp-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px; /* Default width for tiles */
+            padding: 1.5rem;
+            background-color: rgba(30, 41, 59, 0.7);
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            margin: 0 auto; /* Center the tiles */
+        }
+
+        .work-exp-item:hover {
+            animation: pulse-glow 2s infinite ease-in-out alternate;
+        }
+
+        .work-exp-item.expanded {
+            width: 100%;
+            max-width: 100%; /* Stretches to full width on click */
+            height: auto;
+            min-height: 100px;
+            z-index: 50;
+            animation: none;
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .work-exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: opacity 0.3s;
+        }
+        
+        .work-exp-item.expanded .work-exp-header {
+            opacity: 0;
+            position: absolute;
+            visibility: hidden;
+        }
+
+        .work-exp-details {
+            opacity: 0;
+            visibility: hidden;
+            height: 0;
+            overflow: hidden;
+            transition: opacity 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55), height 0.6s;
+        }
+
+        .work-exp-item.expanded .work-exp-details {
+            opacity: 1;
+            visibility: visible;
+            height: auto;
+            transition-delay: 0.3s;
+            overflow: visible;
+        }
+        
+        .work-exp-expanded-header {
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            transition: all 0.6s;
+        }
+
+        .work-exp-item.expanded .work-exp-expanded-header {
+            opacity: 1;
+            visibility: visible;
+            position: relative;
+            transition-delay: 0.3s;
+        }
+
+        /* Chatbot styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+        }
+
+        .chatbot-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #22c55e;
+            color: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            background-color: #16a34a;
+        }
+
+        .chat-window {
+            width: 350px;
+            height: 450px;
+            display: none;
+            flex-direction: column;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            z-index: 100;
+        }
+
+        .chat-header {
+            background-color: rgba(30, 41, 59, 0.7);
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: #22c55e;
+            color: black;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: rgba(30, 41, 59, 0.7);
+            color: white;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: bounce 1s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="background-image">
+    <div class="relative z-10">
+        <!-- Header/Navigation -->
+        <header class="bg-gray-900 bg-opacity-80 shadow-sm sticky top-0 z-50 backdrop-filter backdrop-blur-lg">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-green-400">Kuldeep Mitra</a>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#summary" class="text-gray-300 hover:text-green-400 transition-colors">Summary</a>
+                    <a href="#skills" class="text-gray-300 hover:text-green-400 transition-colors">Skills</a>
+                    <a href="#work-experience" class="text-gray-300 hover:text-green-400 transition-colors">Experience</a>
+                    <a href="#education" class="text-gray-300 hover:text-green-400 transition-colors">Education</a>
+                    <a href="#certifications" class="text-gray-300 hover:text-green-400 transition-colors">Certifications</a>
+                    <a href="#testimonials" class="text-gray-300 hover:text-green-400 transition-colors">Testimonials</a>
+                    <a href="#blog" class="text-gray-300 hover:text-green-400 transition-colors">Blog</a>
+                    <a href="#contact" class="text-gray-300 hover:text-green-400 transition-colors">Contact</a>
+                    <a href="Kuldeep_mitra_06.25_Online.PDF" download
+                        class="bg-green-500 text-gray-900 font-bold py-2 px-4 rounded-full shadow-lg hover:bg-green-400 transition-colors">
+                        Download Resume
+                    </a>
+                </nav>
+                <button id="menu-button" class="md:hidden text-green-400 hover:text-green-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden bg-gray-900 bg-opacity-90 shadow-lg py-2">
+                <a href="#summary" class="block px-6 py-2 text-gray-300 hover:bg-gray-800">Summary</a>
+                <a href="#skills" class="block px-6 py-2 text-gray-300 hover:bg-gray-800">Skills</a>
+                <a href="#work-experience" class="block px-6 py-2 text-gray-300 hover:bg-gray-800">Experience</a>
+                <a href="#education" class="block px-6 py-2 text-gray-300 hover:bg-gray-800">Education</a>
+                <a href="#certifications" class="block px-6 py-2 text-gray-300 hover:bg-gray-800">Certifications</a>
+                <a href="#testimonials" class="block px-6 py-2 text-gray-300 hover:bg-gray-800">Testimonials</a>
+                <a href="#blog" class="block px-6 py-2 text-gray-300 hover:bg-gray-800">Blog</a>
+                <a href="#contact" class="block px-6 py-2 text-gray-300 hover:bg-gray-800">Contact</a>
+                <a href="Kuldeep_mitra_06.25_Online.PDF" download
+                    class="block px-6 py-2 text-green-400 hover:bg-gray-800">Download Resume</a>
+            </div>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section class="text-white py-20 md:py-32 text-center hero-bg-animation">
+                <div class="container mx-auto px-6">
+                    <div class="mb-4">
+                        <img src="prof.jpeg" alt="Profile Picture"
+                            class="rounded-full mx-auto w-40 h-40 object-cover shadow-lg border-4 border-gray-100">
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
+                        Hello, I'm <span class="text-green-400">Kuldeep Mitra</span>.
+                    </h1>
+                    <div class="relative max-w-2xl mx-auto glass p-6 mb-8">
+                        <p id="bio-text" class="text-lg md:text-2xl font-light leading-relaxed">
+                            Cloud Solutions Architect & DevOps Engineer with over 8 years of expertise in cloud
+                            infrastructure (Azure, GCP), virtualization, and DevOps automation.
+                        </p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#contact"
+                            class="bg-green-500 text-gray-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-green-400 transition-colors">
+                            Get In Touch
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Summary Section -->
+            <section id="summary" class="py-12">
+                <div class="container mx-auto px-6 max-w-4xl glass p-8 section-glass">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-6 text-green-400">Profile Summary</h2>
+                    <p class="text-lg text-gray-300 leading-relaxed text-center">
+                        I am a Cloud Solutions Architect with over 8 years of expertise in designing and scaling secure,
+                        high-availability cloud infrastructures. My core competencies include implementing Infrastructure
+                        as Code (IaC) with Terraform and PowerShell, and leading complex hybrid workload migrations. I
+                        am skilled in DevOps automation, network security, and compliance, with a proven track record
+                        of modernizing IT infrastructure and improving efficiency. My passion lies in building
+                        cloud-native solutions that drive organizational growth and innovation.
+                    </p>
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-xl shadow-md p-6 relative section-glass">
+                            <h3 class="font-bold text-xl mb-2 text-green-400">Azure</h3>
+                            <p class="text-gray-400">
+                                Proficient in designing scalable Azure VNets, VPN/App Gateways, Load Balancers, and GRS backups.
+                            </p>
+                        </div>
+                        <div class="bg-gray-800 rounded-xl shadow-md p-6 relative section-glass">
+                            <h3 class="font-bold text-xl mb-2 text-green-400">GCP</h3>
+                            <p class="text-gray-400">
+                                Experienced in end-to-end GCP infrastructure management for compute, storage, and networking.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Skills Section -->
+            <section id="skills" class="py-20">
+                <div class="container mx-auto px-6 glass p-8 section-glass">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-green-400">My Skills</h2>
+                    <div class="skills-container flex flex-col gap-6">
+
+                        <div class="skill-group">
+                            <h3 class="font-bold text-xl text-green-400 text-center mb-4">Cloud Platforms</h3>
+                            <div class="skill-group-items flex flex-wrap justify-center gap-6">
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">☁️</span>
+                                        </div>
+                                        <div class="skill-description">End-to-end infrastructure management for compute, storage, and networking.</div>
+                                    </div>
+                                    <span class="skill-name">GCP</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">💻</span>
+                                        </div>
+                                        <div class="skill-description">Designed scalable VNets, VPN Gateways, and Load Balancers.</div>
+                                    </div>
+                                    <span class="skill-name">Azure</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🖥️</span>
+                                        </div>
+                                        <div class="skill-description">Led VMware HCX migrations to GCP and Azure.</div>
+                                    </div>
+                                    <span class="skill-name">VMware</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <h3 class="font-bold text-xl text-green-400 text-center mb-4">Infrastructure Automation</h3>
+                            <div class="skill-group-items flex flex-wrap justify-center gap-6">
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🚀</span>
+                                        </div>
+                                        <div class="skill-description">Used for implementing Infrastructure as Code (IaC).</div>
+                                    </div>
+                                    <span class="skill-name">Terraform</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">📄</span>
+                                        </div>
+                                        <div class="skill-description">Automated infrastructure setup, saving 60% of time.</div>
+                                    </div>
+                                    <span class="skill-name">ARM Templates</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">⚡</span>
+                                        </div>
+                                        <div class="skill-description">Used for automation and scripting.</div>
+                                    </div>
+                                    <span class="skill-name">PowerShell</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">⌨️</span>
+                                        </div>
+                                        <div class="skill-description">Used for command-line management of Azure resources.</div>
+                                    </div>
+                                    <span class="skill-name">Azure CLI</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <h3 class="font-bold text-xl text-green-400 text-center mb-4">DevOps Tools</h3>
+                            <div class="flex flex-wrap justify-center gap-6">
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🐳</span>
+                                        </div>
+                                        <div class="skill-description">Used for containerization.</div>
+                                    </div>
+                                    <span class="skill-name">Docker</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🐙</span>
+                                        </div>
+                                        <div class="skill-description">Used for version control and collaboration.</div>
+                                    </div>
+                                    <span class="skill-name">Git/GitHub</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">⚙️</span>
+                                        </div>
+                                        <div class="skill-description">Used for continuous integration and delivery.</div>
+                                    </div>
+                                    <span class="skill-name">Jenkins</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🤖</span>
+                                        </div>
+                                        <div class="skill-description">Used for configuration management.</div>
+                                    </div>
+                                    <span class="skill-name">Ansible</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <h3 class="font-bold text-xl text-green-400 text-center mb-4">Cloud Networking & Security</h3>
+                            <div class="flex flex-wrap justify-center gap-6">
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🌐</span>
+                                        </div>
+                                        <div class="skill-description">Implemented for microsegmentation and logical routing.</div>
+                                    </div>
+                                    <span class="skill-name">NSX-T</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🕸️</span>
+                                        </div>
+                                        <div class="skill-description">Designed scalable virtual networks.</div>
+                                    </div>
+                                    <span class="skill-name">VPC/VNet</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🛡️</span>
+                                        </div>
+                                        <div class="skill-description">Administered Network Security Groups for traffic filtering.</div>
+                                    </div>
+                                    <span class="skill-name">NSG</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🔒</span>
+                                        </div>
+                                        <div class="skill-description">Configured for secure hybrid connectivity.</div>
+                                    </div>
+                                    <span class="skill-name">VPN Gateway</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🔗</span>
+                                        </div>
+                                        <div class="skill-description">Oversaw DNS/DHCP configuration.</div>
+                                    </div>
+                                    <span class="skill-name">DNS</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🔑</span>
+                                        </div>
+                                        <div class="skill-description">Administered Identity and Access Management.</div>
+                                    </div>
+                                    <span class="skill-name">IAM</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <h3 class="font-bold text-xl text-green-400 text-center mb-4">Monitoring & Backup</h3>
+                            <div class="flex flex-wrap justify-center gap-6">
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">📊</span>
+                                        </div>
+                                        <div class="skill-description">Experience with Azure's monitoring solutions.</div>
+                                    </div>
+                                    <span class="skill-name">Azure Monitor</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🔍</span>
+                                        </div>
+                                        <div class="skill-description">Used for analyzing logs and troubleshooting.</div>
+                                    </div>
+                                    <span class="skill-name">Log Analytics</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">💿</span>
+                                        </div>
+                                        <div class="skill-description">Experience with Cohesity for data backup.</div>
+                                    </div>
+                                    <span class="skill-name">Cohesity</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">📈</span>
+                                        </div>
+                                        <div class="skill-description">Used for system center operations management.</div>
+                                    </div>
+                                    <span class="skill-name">SCOM</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <h3 class="font-bold text-xl text-green-400 text-center mb-4">Migration & DR</h3>
+                            <div class="flex flex-wrap justify-center gap-6">
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">✈️</span>
+                                        </div>
+                                        <div class="skill-description">Led large-scale migrations with 30% reduced downtime.</div>
+                                    </div>
+                                    <span class="skill-name">VMware HCX</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">➡️</span>
+                                        </div>
+                                        <div class="skill-description">Used for migrating workloads to Azure.</div>
+                                    </div>
+                                    <span class="skill-name">Azure Migrate</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🛡️</span>
+                                        </div>
+                                        <div class="skill-description">Implemented for data protection and disaster recovery.</div>
+                                    </div>
+                                    <span class="skill-name">Recovery Vault</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <h3 class="font-bold text-xl text-green-400 text-center mb-4">Security & Compliance</h3>
+                            <div class="flex flex-wrap justify-center gap-6">
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">✔️</span>
+                                        </div>
+                                        <div class="skill-description">Experience in resolving audit findings.</div>
+                                    </div>
+                                    <span class="skill-name">Audit Remediation</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">📝</span>
+                                        </div>
+                                        <div class="skill-description">Represented infra in Change Advisory Board meetings.</div>
+                                    </div>
+                                    <span class="skill-name">CAB</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🕵️</span>
+                                        </div>
+                                        <div class="skill-description">Authored Root Cause Analysis reports.</div>
+                                    </div>
+                                    <span class="skill-name">RCA</span>
+                                </div>
+                                <div class="skill-item-wrapper">
+                                    <div class="skill-item">
+                                        <div class="skill-item-content">
+                                            <span class="skill-icon">🐛</span>
+                                        </div>
+                                        <div class="skill-description">Conducted vulnerability reviews and patching.</div>
+                                    </div>
+                                    <span class="skill-name">Vulnerability Management</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Work Experience Section -->
+            <section id="work-experience" class="py-20">
+                <div class="container mx-auto px-6 max-w-4xl glass p-8 section-glass">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-green-400">Work Experience</h2>
+                    <div class="flex flex-col gap-6">
+                        <!-- Company 1 -->
+                        <div class="work-exp-item-wrapper">
+                            <div class="work-exp-item cursor-pointer">
+                                <div class="work-exp-header">
+                                    <div>
+                                        <h3 class="text-xl font-semibold mb-1 text-green-400">Cognizant</h3>
+                                        <p class="text-gray-300">Cloud Solutions Architect</p>
+                                    </div>
+                                    <p class="text-gray-400">2021 - Present</p>
+                                </div>
+                                <div class="work-exp-expanded-header">
+                                    <h3 class="text-xl font-semibold mb-1 text-green-400">Cognizant</h3>
+                                    <p class="text-gray-300">Cloud Solutions Architect (2021 - Present)</p>
+                                </div>
+                                <div class="work-exp-details mt-4 text-gray-300">
+                                    <ul class="list-disc list-inside space-y-2">
+                                        <li>Architected and deployed highly available and scalable solutions on Azure and GCP, leveraging a deep understanding of cloud-native services and best practices.</li>
+                                        <li>Led a team in designing and implementing automated deployment pipelines using Jenkins and Azure DevOps, reducing deployment time by over 50%.</li>
+                                        <li>Managed critical hybrid cloud migrations, leading the transition of over 500 virtual machines from VMware to Azure and GCP with zero downtime.</li>
+                                        <li>Developed comprehensive disaster recovery plans and implemented automated failover procedures, ensuring business continuity for key applications.</li>
+                                        <li>Authored and implemented Infrastructure as Code (IaC) using Terraform and PowerShell, managing complex infrastructure changes with version control and automated testing.</li>
+                                        <li>Mentored junior engineers on cloud architecture and DevOps principles, fostering a culture of continuous learning and improvement.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Company 2 -->
+                        <div class="work-exp-item-wrapper">
+                            <div class="work-exp-item cursor-pointer">
+                                <div class="work-exp-header">
+                                    <div>
+                                        <h3 class="text-xl font-semibold mb-1 text-green-400">TCS (Tata Consultancy Services)</h3>
+                                        <p class="text-gray-300">Senior Infrastructure Analyst</p>
+                                    </div>
+                                    <p class="text-gray-400">2019 - 2021</p>
+                                </div>
+                                <div class="work-exp-expanded-header">
+                                    <h3 class="text-xl font-semibold mb-1 text-green-400">TCS (Tata Consultancy Services)</h3>
+                                    <p class="text-gray-300">Senior Infrastructure Analyst (2019 - 2021)</p>
+                                </div>
+                                <div class="work-exp-details mt-4 text-gray-300">
+                                    <ul class="list-disc list-inside space-y-2">
+                                        <li>Managed and maintained a large-scale enterprise virtualization environment using VMware, ensuring high performance and stability for over 1000 virtual machines.</li>
+                                        <li>Implemented and optimized backup and recovery solutions with Cohesity, reducing data recovery time by 30% and improving overall data protection.</li>
+                                        <li>Collaborated with security teams to conduct regular vulnerability assessments and implement patching cycles, ensuring compliance with industry standards and reducing security risks.</li>
+                                        <li>Automated routine administrative tasks using PowerShell scripting, saving the team an average of 15 hours per week and improving operational efficiency.</li>
+                                        <li>Provided Level 3 support for critical infrastructure incidents, leading root cause analysis (RCA) and implementing preventative measures to avoid future issues.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Company 3 -->
+                        <div class="work-exp-item-wrapper">
+                            <div class="work-exp-item cursor-pointer">
+                                <div class="work-exp-header">
+                                    <div>
+                                        <h3 class="text-xl font-semibold mb-1 text-green-400">Wipro</h3>
+                                        <p class="text-gray-300">Infrastructure Engineer</p>
+                                    </div>
+                                    <p class="text-gray-400">2017 - 2019</p>
+                                </div>
+                                <div class="work-exp-expanded-header">
+                                    <h3 class="text-xl font-semibold mb-1 text-green-400">Wipro</h3>
+                                    <p class="text-gray-300">Infrastructure Engineer (2017 - 2019)</p>
+                                </div>
+                                <div class="work-exp-details mt-4 text-gray-300">
+                                    <ul class="list-disc list-inside space-y-2">
+                                        <li>Administered and supported Windows Server environments, including Active Directory, DNS, and DHCP services.</li>
+                                        <li>Managed the full patch lifecycle for Windows infrastructure, from testing to deployment, ensuring systems were up-to-date and secure.</li>
+                                        <li>Implemented and maintained monitoring solutions using tools like SCOM, providing real-time visibility into system health and performance.</li>
+                                        <li>Assisted in the planning and execution of hardware and software upgrades, ensuring minimal disruption to business operations.</li>
+                                        <li>Worked with the change advisory board (CAB) to review and approve all infrastructure changes, ensuring they met compliance and security requirements.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Company 4 -->
+                        <div class="work-exp-item-wrapper">
+                            <div class="work-exp-item cursor-pointer">
+                                <div class="work-exp-header">
+                                    <div>
+                                        <h3 class="text-xl font-semibold mb-1 text-green-400">Future Focus Infotech (IBM India Pvt. Ltd.)</h3>
+                                        <p class="text-gray-300">Infrastructure Administrator</p>
+                                    </div>
+                                    <p class="text-gray-400">2015 - 2017</p>
+                                </div>
+                                <div class="work-exp-expanded-header">
+                                    <h3 class="text-xl font-semibold mb-1 text-green-400">Future Focus Infotech (IBM India Pvt. Ltd.)</h3>
+                                    <p class="text-gray-300">Infrastructure Administrator (2015 - 2017)</p>
+                                </div>
+                                <div class="work-exp-details mt-4 text-gray-300">
+                                    <ul class="list-disc list-inside space-y-2">
+                                        <li>Supported over 1000 enterprise virtual machines across global data centers, ensuring their availability and performance.</li>
+                                        <li>Managed key virtualization tasks, including provisioning new VMs, creating snapshots, and configuring backups.</li>
+                                        <li>Executed OS hardening and compliance patching, working with security teams to resolve incidents and conduct vulnerability reviews.</li>
+                                        <li>Provided technical support for infrastructure-related issues, collaborating with cross-functional teams to resolve problems efficiently.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Company 5 -->
+                        <div class="work-exp-item-wrapper">
+                            <div class="work-exp-item cursor-pointer">
+                                <div class="work-exp-header">
+                                    <div>
+                                        <h3 class="text-xl font-semibold mb-1 text-green-400">CMS IT Services Pvt. Ltd. (DCB Bank)</h3>
+                                        <p class="text-gray-300">System Administrator</p>
+                                    </div>
+                                    <p class="text-gray-400">2013 - 2015</p>
+                                </div>
+                                <div class="work-exp-expanded-header">
+                                    <h3 class="text-xl font-semibold mb-1 text-green-400">CMS IT Services Pvt. Ltd. (DCB Bank)</h3>
+                                    <p class="text-gray-300">System Administrator (2013 - 2015)</p>
+                                </div>
+                                <div class="work-exp-details mt-4 text-gray-300">
+                                    <ul class="list-disc list-inside space-y-2">
+                                        <li>Oversaw DNS/DHCP configuration and implemented zero-downtime IP address management, ensuring uninterrupted network services.</li>
+                                        <li>Developed and delivered automation for Windows infrastructure environments, reducing manual intervention by 40% and improving reliability.</li>
+                                        <li>Implemented SOP-based automation to streamline routine administrative tasks, ensuring consistency and efficiency.</li>
+                                        <li>Provided system administration support for a banking environment, focusing on security, compliance, and uptime.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="py-20">
+                <div class="container mx-auto px-6 glass p-8 section-glass">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-green-400">My Projects</h2>
+                    <div id="project-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Project 1 -->
+                        <div class="project-card bg-gray-800 rounded-xl shadow-md overflow-hidden text-gray-300 section-glass" data-project-title="Hybrid Cloud Migration" data-project-description="Led the migration of hybrid cloud workloads using VMware HCX to Azure and GCP, resulting in a 30% reduction in downtime.">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Hybrid Cloud Migration</h3>
+                                <p class="text-gray-400">
+                                    Led the migration of hybrid cloud workloads using VMware HCX to Azure and GCP,
+                                    resulting in a 30% reduction in downtime.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Project 2 -->
+                        <div class="project-card bg-gray-800 rounded-xl shadow-md overflow-hidden text-gray-300 section-glass" data-project-title="Patch Lifecycle Automation" data-project-description="Developed and implemented automated processes for Azure and Windows compliance patching.">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Patch Lifecycle Automation</h3>
+                                <p class="text-gray-400">
+                                    Developed and implemented automated processes for Azure and Windows compliance
+                                    patching.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Project 3 -->
+                        <div class="project-card bg-gray-800 rounded-xl shadow-md overflow-hidden text-gray-300 section-glass" data-project-title="Decommission Workflow" data-project-description="Automated asset lifecycle management, ensuring a smooth and efficient decommissioning process.">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Decommission Workflow</h3>
+                                <p class="text-gray-400">
+                                    Automated asset lifecycle management, ensuring a smooth and efficient decommissioning
+                                    process.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Project 4 -->
+                        <div class="project-card bg-gray-800 rounded-xl shadow-md overflow-hidden text-gray-300 section-glass" data-project-title="Storage Migration" data-project-description="Performed a phased, no-downtime storage migration from Unity to VNX.">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Storage Migration</h3>
+                                <p class="text-gray-400">
+                                    Performed a phased, no-downtime storage migration from Unity to VNX.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section id="education" class="py-20">
+                <div class="container mx-auto px-6 glass p-8 section-glass">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-green-400">Education</h2>
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div class="bg-gray-800 rounded-xl shadow-md p-6 relative section-glass">
+                            <h3 class="font-bold text-xl mb-2 text-green-400">B.Tech - Electrical Engineering</h3>
+                            <p class="text-lg text-gray-300">
+                                Biju Patnaik University of Technology, Odisha
+                            </p>
+                            <p class="text-sm text-gray-400 mt-1">
+                                2017
+                            </p>
+                        </div>
+                        <div class="bg-gray-800 rounded-xl shadow-md p-6 relative section-glass">
+                            <h3 class="font-bold text-xl mb-2 text-green-400">12th Grade</h3>
+                            <p class="text-lg text-gray-300">
+                                [Your 12th Grade School Name]
+                            </p>
+                            <p class="text-sm text-gray-400 mt-1">
+                                [Your 12th Grade Year]
+                            </p>
+                        </div>
+                        <div class="bg-gray-800 rounded-xl shadow-md p-6 relative section-glass">
+                            <h3 class="font-bold text-xl mb-2 text-green-400">10th Grade</h3>
+                            <p class="text-lg text-gray-300">
+                                [Your 10th Grade School Name]
+                            </p>
+                            <p class="text-sm text-gray-400 mt-1">
+                                [Your 10th Grade Year]
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Certifications Section -->
+            <section id="certifications" class="py-20">
+                <div class="container mx-auto px-6 max-w-4xl glass p-8 section-glass">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-green-400">Certifications</h2>
+                    <div class="grid md:grid-cols-2 gap-8 text-center">
+                        <div class="bg-gray-800 rounded-xl shadow-md p-6 relative section-glass">
+                            <h3 class="font-bold text-xl mb-2 text-green-400">Microsoft Certified: Azure Administrator (AZ-104)</h3>
+                        </div>
+                        <div class="bg-gray-800 rounded-xl shadow-md p-6 relative section-glass">
+                            <h3 class="font-bold text-xl mb-2 text-green-400">Google Cloud Professional</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="py-20">
+                <div class="container mx-auto px-6 max-w-4xl glass p-8 section-glass">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-green-400">About Me</h2>
+                    <div class="text-lg text-gray-300 leading-relaxed">
+                        <p class="mb-6">
+                            I am a Cloud Solutions Architect and DevOps Engineer with over 8 years of experience. My work
+                            focuses on designing and scaling secure, high-availability cloud architectures. I have a strong
+                            background in infrastructure as code (IaC) using tools like Terraform and PowerShell, and I am
+                            p
+                            assionate about driving organizational transformation through cloud-native solutions.
+                        </p>
+                        <p class="mb-6">
+                            I have a proven track record in hybrid workload migrations, disaster recovery planning, and
+                            implementing robust security and compliance measures. My expertise spans across major cloud
+                            platforms including Azure and GCP, as well as virtualization with VMware.
+                        </p>
+                        <p>
+                            Beyond my professional life, I enjoy game development using Unreal Engine and creating 3D
+                            models and animations. I also design AI/ML prototypes and standalone automation tools,
+                            reflecting my continuous passion for learning and innovation.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="py-20">
+                <div class="container mx-auto px-6 max-w-2xl text-center glass p-8 section-glass">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-green-400">Get In Touch</h2>
+                    <p class="text-lg font-light mb-8 text-gray-300">
+                        Have a question or a project in mind? Let's connect and discuss how I can help.
+                    </p>
+                    <form class="space-y-6 text-left" id="contact-form">
+                        <div>
+                            <label for="name" class="block text-sm font-semibold mb-2">Name</label>
+                            <div class="relative">
+                                <input type="text" id="name" name="name"
+                                    class="w-full p-3 rounded-lg bg-gray-900 bg-opacity-50 border border-gray-700 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 transition-shadow"
+                                    placeholder="Your Name">
+                                <span id="name-validation" class="absolute inset-y-0 right-0 pr-3 flex items-center"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-semibold mb-2">Email</label>
+                            <div class="relative">
+                                <input type="email" id="email" name="email"
+                                    class="w-full p-3 rounded-lg bg-gray-900 bg-opacity-50 border border-gray-700 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 transition-shadow"
+                                    placeholder="you@example.com">
+                                <span id="email-validation" class="absolute inset-y-0 right-0 pr-3 flex items-center"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-semibold mb-2">Message</label>
+                            <div class="relative">
+                                <textarea id="message" name="message" rows="4"
+                                    class="w-full p-3 rounded-lg bg-gray-900 bg-opacity-50 border border-gray-700 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 transition-shadow"
+                                    placeholder="Your message..."></textarea>
+                                <span id="message-validation" class="absolute inset-y-0 right-0 pr-3 flex items-center"></span>
+                            </div>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-green-500 text-gray-900 font-bold py-3 px-6 rounded-full shadow-lg hover:bg-green-400 transition-colors">
+                            Send Message
+                        </button>
+                    </form>
+                    <div id="contact-status" class="mt-4 text-sm font-semibold text-center hidden"></div>
+                </div>
+            </section>
+
+        </main>
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-gray-400 py-6 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://linkedin.com/in/kuldeepmitra" target="_blank"
+                    class="text-gray-400 hover:text-green-400 transition-colors">
+                    <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.765s.784-1.765 1.75-1.765 1.75.79 1.75 1.765-.783 1.765-1.75 1.765zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                </a>
+                <a href="https://github.com/kuldeepmitra" target="_blank"
+                    class="text-gray-400 hover:text-green-400 transition-colors">
+                    <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.809 1.305 3.493.997.108-.775.418-1.305.762-1.605-2.665-.304-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.196-6.096 8.196-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                </a>
+                <a href="mailto:kuldeepmitra96@gmail.com"
+                    class="text-gray-400 hover:text-green-400 transition-colors">
+                    <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M2.003 5.884l1.859 1.859c-.381.656-.632 1.393-.728 2.164l-1.031 4.544 2.257 2.257c.38.38 1.002.38 1.382 0l1.96-1.96c.725.293 1.5.474 2.298.536l-1.928 1.928c-.38.38-.38 1.002 0 1.382l2.257 2.257c.38.38 1.002.38 1.382 0l4.544-1.031c.771-.096 1.508-.347 2.164-.728l1.859 1.859c.38.38 1.002.38 1.382 0l2.257-2.257c.38-.38.38-1.002 0-1.382l-1.859-1.859c.381-.656.632-1.393.728-2.164l1.031-4.544-2.257-2.257c-.38-.38-1.002-.38-1.382 0l-1.96 1.96c-.725-.293-1.5-.474-2.298-.536l1.928-1.928c.38-.38.38-1.002 0-1.382l-2.257-2.257c-.38-.38-1.002-.38-1.382 0l-4.544 1.031c-.771.096-1.508.347-2.164.728l-1.859-1.859c-.38-.38-1.002-.38 0-1.382l-2.257-2.257c-.38-.38-1.002-.38-1.382 0l-1.859 1.859zM12 18.5c-3.58 0-6.5-2.92-6.5-6.5s2.92-6.5 6.5-6.5 6.5 2.92 6.5 6.5-2.92 6.5-6.5 6.5z" />
+                    </svg>
+                </a>
+            </div>
+            <p class="text-sm">&copy; 2024 Kuldeep Mitra. All rights reserved.</p>
+        </footer>
+
+        <!-- Chatbot UI -->
+        <div class="chatbot-container">
+            <button id="chatbot-toggle" class="chatbot-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M16 10h.01M12 14h.01M12 18h.01M12 22a10 10 0 110-20 10 10 0 010 20z" />
+                </svg>
+            </button>
+            <div id="chatbot-window" class="chat-window glass fixed bottom-20 right-2 w-80 h-96">
+                <div class="chat-header">
+                    <span>Kuldeep personal assistance NOVA</span>
+                    <button id="chatbot-close" class="text-white hover:text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="chat-messages" class="chat-messages">
+                    <div class="bot-message message">Hello! I'm an AI assistant. How can I help you learn more about Kuldeep's profile?</div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chat-input-box" class="w-full p-2 rounded-lg bg-gray-900 bg-opacity-50 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-green-500" placeholder="Ask a question...">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Chatbot functionality
+        document.getElementById('chatbot-toggle').addEventListener('click', function () {
+            const chatWindow = document.getElementById('chatbot-window');
+            chatWindow.style.display = 'flex';
+            this.style.display = 'none';
+        });
+
+        document.getElementById('chatbot-close').addEventListener('click', function () {
+            const chatWindow = document.getElementById('chatbot-window');
+            chatWindow.style.display = 'none';
+            document.getElementById('chatbot-toggle').style.display = 'flex';
+        });
+
+        const chatInputBox = document.getElementById('chat-input-box');
+        const chatMessages = document.getElementById('chat-messages');
+
+        const profileData = `
+            Kuldeep Mitra's Profile:
+            Professional Summary: Cloud Solutions Architect & DevOps Engineer with 8+ years of expertise in cloud infrastructure (Azure, GCP), virtualization, and DevOps automation. Skilled in designing and scaling secure, high-availability architectures, hybrid workload migrations using VMware HCX, and implementing IaC with Terraform/ARM/PowerShell. Proven success in DR planning, compliance, and modernization. Eager to drive transformation within organizations embracing cloud-native infrastructure.
+
+            Core Competencies & Skills:
+            - Cloud Platforms: Google Cloud Platform (GCP), Microsoft Azure, VMware
+            - Infrastructure Automation: Terraform, ARM Templates, PowerShell, Azure CLI
+            - DevOps Tools: Docker, Git/GitHub, Jenkins, Ansible
+            - Cloud Networking & Security: NSX-T, VPC/VNet, NSG, VPN Gateway, DNS, IAM
+            - Monitoring & Backup: Azure Monitor, Log Analytics, Cohesity, SCOM
+            - Migration & DR: VMware HCX (P2V/V2V), CGVE, Azure Migrate, Recovery Vault
+            - Security & Compliance: Audit Remediation, CAB, RCA, Vulnerability Management
+            - Soft Skills: Critical Thinking, Agile Collaboration, RCA Leadership, Decision-Making
+
+            Projects:
+            - Hybrid Cloud Migration: Led the migration of hybrid cloud workloads using VMware HCX to Azure and GCP, resulting in a 30% reduction in downtime.
+            - Patch Lifecycle Automation: Developed and implemented automated processes for Azure and Windows compliance patching.
+            - Decommission Workflow: Automated asset lifecycle management.
+            - Storage Migration: Performed a phased, no-downtime storage migration from Unity to VNX.
+
+            Education:
+            - B.Tech - Electrical Engineering, Biju Patnaik University of Technology, Odisha (2017)
+            - 12th Grade: [Your 12th Grade School Name]
+            - 10th Grade: [Your 10th Grade Year]
+
+            Certifications:
+            - Microsoft Certified: Azure Administrator (AZ-104)
+            - Google Cloud Professional
+        `;
+
+        function addMessage(text, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function getGeminiResponse(prompt) {
+            const fullPrompt = `${profileData}\n\nUser Question: ${prompt}\n\nBased on this information, provide a concise and helpful answer.`;
+            let retryCount = 0;
+            const maxRetries = 3;
+            const delay = 1000;
+
+            while (retryCount < maxRetries) {
+                try {
+                    const apiKey = "";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                    const payload = {
+                        contents: [{
+                            role: "user",
+                            parts: [{ text: fullPrompt }]
+                        }],
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 429) {
+                            console.log(`Rate limit exceeded. Retrying in ${delay * (2 ** retryCount)}ms...`);
+                            await new Promise(resolve => setTimeout(resolve, delay * (2 ** retryCount)));
+                            retryCount++;
+                            continue;
+                        }
+                        throw new Error(`API call failed with status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        return "I'm sorry, I couldn't generate a response. Please try again.";
+                    }
+                } catch (error) {
+                    console.error("Error calling Gemini API:", error);
+                    return "I'm sorry, I encountered an error. Please try again later.";
+                }
+            }
+            return "I'm having trouble connecting right now. Please check your network and try again.";
+        }
+
+        const skillsContainer = document.querySelector('.skills-container');
+        skillsContainer.addEventListener('click', function(event) {
+            const skillWrapper = event.target.closest('.skill-item-wrapper');
+            if (skillWrapper) {
+                const skillItem = skillWrapper.querySelector('.skill-item');
+                const isExpanded = skillItem.classList.contains('expanded');
+
+                // Collapse all expanded skills
+                document.querySelectorAll('.skill-item.expanded').forEach(item => {
+                    item.classList.remove('expanded');
+                    item.closest('.skill-item-wrapper').classList.remove('expanded-wrapper');
+                });
+                
+                // Toggle the clicked skill's expanded state
+                if (!isExpanded) {
+                    skillItem.classList.add('expanded');
+                    skillWrapper.classList.add('expanded-wrapper');
+                }
+            }
+        });
+
+        const workExperienceContainer = document.querySelector('#work-experience .flex.flex-col.gap-6');
+        workExperienceContainer.addEventListener('click', function(event) {
+            const workExpWrapper = event.target.closest('.work-exp-item-wrapper');
+            if (workExpWrapper) {
+                const workExpItem = workExpWrapper.querySelector('.work-exp-item');
+                const isExpanded = workExpItem.classList.contains('expanded');
+
+                // Collapse all expanded work experience tiles
+                document.querySelectorAll('.work-exp-item.expanded').forEach(item => {
+                    item.classList.remove('expanded');
+                });
+
+                // Toggle the clicked work experience tile's expanded state
+                if (!isExpanded) {
+                    workExpItem.classList.add('expanded');
+                }
+            }
+        });
+
+        const skillItems = document.querySelectorAll('.skill-item-wrapper');
+        skillItems.forEach(item => {
+            const skillItem = item.querySelector('.skill-item');
+            item.addEventListener('mouseenter', function() {
+                skillItem.style.animation = 'pulse-glow 2s infinite ease-in-out alternate';
+            });
+            item.addEventListener('mouseleave', function() {
+                skillItem.style.animation = 'none';
+            });
+        });
+    </script>
+</body>
+
+</html>
+```
